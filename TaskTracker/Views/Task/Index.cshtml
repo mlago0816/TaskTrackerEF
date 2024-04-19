@@ -1,0 +1,35 @@
+﻿@model List<TaskTracker.Models.Task>
+
+@{
+    ViewBag.Title = "Task Tracker";
+}
+
+<h2 style="text-align: center;">Task Tracker</h2>
+
+<div class="mb-3">
+    <a href="@Url.Action("Create", "Task")" class="btn btn-primary">Add New Task</a>
+</div>
+
+<table class="table">
+    <tr>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Due Date</th>
+        <th>Status</th>
+        <th>Actions</th>
+    </tr>
+    @foreach (var task in Model)
+    {
+        <tr>
+            <td>@task.Title</td>
+            <td>@task.Description</td>
+            <td>@(task.DueDate.HasValue ? task.DueDate.Value.ToString("yyyy-MM-dd hh:mm:tt") : "")</td>
+            <td>@(task.IsDone ? "Done" : "To Do")</td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = task.Id }, new { @class = "btn btn-info btn-sm mr-1" }) |
+                @Html.ActionLink("Update Status", "UpdateStatus", new { id = task.Id }, new { @class = "btn btn-warning btn-sm mr-1" }) |
+                @Html.ActionLink("Delete", "Delete", new { id = task.Id }, new { @class = "btn btn-danger btn-sm" })
+            </td>
+        </tr>
+    }
+</table>
